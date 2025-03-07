@@ -20,8 +20,8 @@ class RegistrationWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        # self.setGeometry(0, 0, 640, 640)
-        self.setFixedSize(640, 640)
+        self.setGeometry(0, 0, 640, 640)
+        # self.setFixedSize(640, 640)
         self.setWindowTitle("Week 2 : Layout - User Registration Form")
 
         self.__init_ui()
