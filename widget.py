@@ -1,7 +1,5 @@
 import sys
-from PyQt6.QtCore import (
-    Qt,
-)
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QApplication,
     QWidget,
@@ -15,6 +13,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QLabel,
 )
+from qt_material import apply_stylesheet
 
 
 class RegistrationWindow(QWidget):
@@ -32,67 +31,17 @@ class RegistrationWindow(QWidget):
         root_layout.setContentsMargins(16, 16, 16, 16)
         root_layout.setSpacing(8)
 
-        id_frame = QFrame()
-        id_frame.setFrameShape(QFrame.Shape.Box)
-        id_frame.setFrameShadow(QFrame.Shadow.Raised)
-        id_layout = QVBoxLayout()
-        id_layout.setContentsMargins(16, 24, 16, 24)
-        id_layout.setSpacing(16)
-        id_layout.addWidget(QLabel("Nama : Dzakanov Inshoofi"))
-        id_layout.addWidget(QLabel("Nim : F1D02310110"))
-        id_layout.addWidget(QLabel("Kelas : C"))
-        id_frame.setLayout(id_layout)
+        id_frame = self.__create_frame()
+        id_frame.setLayout(self.__get_identity_layout())
 
-        nv_frame = QFrame()
-        nv_frame.setFrameShape(QFrame.Shape.Box)
-        nv_frame.setFrameShadow(QFrame.Shadow.Raised)
-        nv_layout = QHBoxLayout()
-        nv_layout.setContentsMargins(16, 16, 16, 16)
-        nv_layout.setSpacing(16)
-        nv_layout.addWidget(QPushButton("Home"))
-        nv_layout.addWidget(QPushButton("About"))
-        nv_layout.addWidget(QPushButton("Contact"))
-        nv_frame.setLayout(nv_layout)
+        nv_frame = self.__create_frame()
+        nv_frame.setLayout(self.__get_navigation_layout())
 
-        ur_frame = QFrame()
-        ur_frame.setFrameShape(QFrame.Shape.Box)
-        ur_frame.setFrameShadow(QFrame.Shadow.Raised)
-        ur_layout = QFormLayout()
-        ur_layout.setContentsMargins(196, 16, 196, 16)
-        ur_layout.setSpacing(16)
-        ur_layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
-        ur_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        ur_layout.addRow(QLabel("Full Name:"), QLineEdit())
-        ur_layout.addRow(QLabel("Email:"), QLineEdit())
-        ur_layout.addRow(QLabel("Phone:"), QLineEdit())
+        ur_frame = self.__create_frame()
+        ur_frame.setLayout(self.__get_user_registration_layout())
 
-        sex_layout = QHBoxLayout()
-        sex_layout.addWidget(QRadioButton("Male"))
-        sex_layout.addWidget(QRadioButton("Female"))
-
-        ur_layout.addRow(QLabel("Gender:"), sex_layout)
-
-        country_selector = QComboBox()
-        country_selector.setEditable(True)
-
-        country_selector.addItems([
-            "Canada", "Germany", "India", "China", "Japan", "Brazil", "Mexico"
-        ])
-
-        country_selector.setCurrentIndex(-1)
-
-        ur_layout.addRow(QLabel("Country:"), country_selector)
-        ur_frame.setLayout(ur_layout)
-
-        ac_frame = QFrame()
-        ac_frame.setFrameShape(QFrame.Shape.Box)
-        ac_frame.setFrameShadow(QFrame.Shadow.Raised)
-        ac_layout = QHBoxLayout()
-        ac_layout.setContentsMargins(16, 16, 16, 16)
-        ac_layout.setSpacing(16)
-        ac_layout.addWidget(QPushButton("Submit"))
-        ac_layout.addWidget(QPushButton("Cancel"))
-        ac_frame.setLayout(ac_layout)
+        ac_frame = self.__create_frame()
+        ac_frame.setLayout(self.__get_actions_layout())
 
         root_layout.addWidget(QLabel("Identitas"))
         root_layout.addWidget(id_frame)
@@ -104,9 +53,70 @@ class RegistrationWindow(QWidget):
         root_layout.addWidget(ac_frame)
         self.setLayout(root_layout)
 
+    def __create_frame(self) -> QFrame:
+        frame = QFrame()
+        frame.setFrameShape(QFrame.Shape.Box)
+        frame.setFrameShadow(QFrame.Shadow.Raised)
+        return frame
+
+    def __get_identity_layout(self) -> QVBoxLayout:
+        layout = QVBoxLayout()
+        layout.setContentsMargins(16, 24, 16, 24)
+        layout.setSpacing(16)
+        layout.addWidget(QLabel("Nama : Dzakanov Inshoofi"))
+        layout.addWidget(QLabel("Nim : F1D02310110"))
+        layout.addWidget(QLabel("Kelas : C"))
+        return layout
+
+    def __get_navigation_layout(self) -> QHBoxLayout:
+        layout = QHBoxLayout()
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(16)
+        layout.addWidget(QPushButton("Home"))
+        layout.addWidget(QPushButton("About"))
+        layout.addWidget(QPushButton("Contact"))
+        return layout
+
+    def __get_user_registration_layout(self) -> QFormLayout:
+        layout = QFormLayout()
+        layout.setContentsMargins(178, 16, 178, 16)
+        layout.setSpacing(16)
+        layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
+        layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
+        layout.addRow(QLabel("Full Name:"), QLineEdit())
+        layout.addRow(QLabel("Email:"), QLineEdit())
+        layout.addRow(QLabel("Phone:"), QLineEdit())
+
+        gender_layout = QHBoxLayout()
+        gender_layout.addWidget(QRadioButton("Male"))
+        gender_layout.addWidget(QRadioButton("Female"))
+
+        layout.addRow(QLabel("Gender:"), gender_layout)
+
+        country_selector = QComboBox()
+        country_selector.setEditable(True)
+
+        country_selector.addItems([
+            "Canada", "Germany", "India", "China", "Japan", "Brazil", "Mexico"
+        ])
+
+        country_selector.setCurrentIndex(-1)
+
+        layout.addRow(QLabel("Country:"), country_selector)
+        return layout
+
+    def __get_actions_layout(self) -> QHBoxLayout:
+        layout = QHBoxLayout()
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(16)
+        layout.addWidget(QPushButton("Submit"))
+        layout.addWidget(QPushButton("Cancel"))
+        return layout
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    apply_stylesheet(app, "light_amber.xml")
 
     window = RegistrationWindow()
     window.show()
